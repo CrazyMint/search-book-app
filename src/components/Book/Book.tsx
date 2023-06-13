@@ -21,44 +21,29 @@ const Book: React.FC<BookProps> = ({
 	categories,
 	wished,
 }) => {
-	const [wishedButton, setWishedButton] = useState(false);
 	const [showDetails, setShowDetails] = useState(false);
 
 	const dispatch = useAppDispatch();
 	const displayAuthors =
 		authors?.length === 1 ? authors[0] : authors?.join(", ");
 
-	const handleClickAdd = (event: MouseEvent<HTMLButtonElement>) => {
+	const handleClickAdd = () => {
 		try {
-			const id = (
-				(
-					(event.currentTarget.parentNode as HTMLElement)
-						.parentNode as HTMLElement
-				).parentElement as HTMLElement
-			).getAttribute("book-id");
-			dispatch(addToWishList(id));
-			setWishedButton(true);
+			dispatch(addToWishList(bookId));
 		} catch (error) {
 			console.log(error);
 			alert(error);
 		}
 	};
-	const handleClickRemove = (event: MouseEvent<HTMLButtonElement>) => {
+	const handleClickRemove = () => {
 		try {
-			const id = (
-				(
-					(event.currentTarget.parentNode as HTMLElement)
-						.parentNode as HTMLElement
-				).parentElement as HTMLElement
-			).getAttribute("book-id");
-			dispatch(removeFromWishList(id));
-			setWishedButton(false);
+			dispatch(removeFromWishList(bookId));
 		} catch (error) {
 			console.log(error);
 			alert(error);
 		}
 	};
-	const handleClickBook = (event: MouseEvent<HTMLImageElement>) => {
+	const handleClickBook = () => {
 		try {
 			setShowDetails(!showDetails);
 		} catch (error) {
