@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { searchBookList } from "../../slices/bookListSlice";
 import { updateSearchInput } from "../../slices/searchSlice";
@@ -21,14 +21,22 @@ export const SearchBar: React.FC<SearchBarProps> = (props) => {
 	};
 	return (
 		<div>
-			<input
-				value={searchInput}
-				onChange={handleInput}
-				placeholder="title"
-			></input>
-			<Button onClick={handleSearch} variant="primary">
-				Search
-			</Button>
+			<InputGroup className="mb-3">
+				<Form.Control
+					value={searchInput}
+					onChange={handleInput}
+					placeholder="Title"
+					aria-label="Title"
+					aria-describedby="basic-addon2"
+				/>
+				<Button
+					onClick={handleSearch}
+					variant="outline-secondary"
+					id="button-addon2"
+				>
+					Search
+				</Button>
+			</InputGroup>
 		</div>
 	);
 };

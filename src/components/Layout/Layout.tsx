@@ -11,7 +11,7 @@ const linkStyle = {
 	textDecoration: "none",
 	color: "blue",
 	padding: "5px",
-	border: "1px solid black",
+	border: "1px solid grey",
 	borderRadius: "6px",
 };
 
