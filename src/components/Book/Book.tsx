@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from "react";
+import React, { useState } from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { BookDetailProps, BookInfoProps } from "../BookList/BookList";
 import { addToWishList, removeFromWishList } from "../../slices/bookListSlice";

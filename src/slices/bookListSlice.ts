@@ -22,10 +22,8 @@ const initialState: BookListState = {
 export const searchBookList = createAsyncThunk(
 	"bookListSlice/searchBookList",
 	async (searchInput: string, thunkAPI) => {
-		await getBooks(searchInput)
-			.then((data) => {
-				thunkAPI.dispatch(updateBookList(data.items));
-			})
+		return await getBooks(searchInput)
+			.then((data) => data.items)
 			.catch((err) => {
 				console.log(err);
 				alert(err);
@@ -37,7 +35,7 @@ export const bookListSlice: Slice = createSlice({
 	name: "bookList",
 	initialState,
 	reducers: {
-		updateBookList: (state, action: PayloadAction<BookListState>) => {
+		updateBookList: (state, action) => {
 			state.books = action.payload;
 		},
 		addToWishList: (state, action: PayloadAction<BookListState>) => {
@@ -72,7 +70,8 @@ export const bookListSlice: Slice = createSlice({
 			.addCase(searchBookList.pending, (state) => {
 				state.isPending = true;
 			})
-			.addCase(searchBookList.fulfilled, (state) => {
+			.addCase(searchBookList.fulfilled, (state, action) => {
+				state.books = action.payload;
 				state.isPending = false;
 			})
 			.addCase(searchBookList.rejected, (state) => {

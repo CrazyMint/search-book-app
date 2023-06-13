@@ -8,13 +8,6 @@ import { Layout } from "./components/Layout/Layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-	// useEffect(() => {
-	// 	getBooks().then((data) => {
-	// 		const books = data.items;
-	// 		console.log("b", books);
-	// 	});
-	// }, []);
-
 	return (
 		<BrowserRouter>
 			<Provider store={store}>
