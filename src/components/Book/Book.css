@@ -1,0 +1,35 @@
+li {
+	width: 60%;
+	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.brief-container {
+	width: 100%;
+	height: 200px;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	padding-left: 20px;
+}
+
+.detail-container {
+	width: 100%;
+	text-align: left;
+}
+
+.brief-side {
+	text-align: left;
+}
+
+.title {
+	font-weight: 800;
+	font-size: 20px;
+}
+
+img {
+	width: 150px;
+	height: 200px;
+}
