@@ -95,24 +95,24 @@ const Book: React.FC<BookProps> = ({
 			{showDetails ? (
 				<div className="detail-container">
 					<p>
-						<strong>Subtitle:</strong> {subtitle}
+						<strong>Subtitle: </strong> {subtitle}
 					</p>
 					<p>
-						<strong>Publisher:</strong> {publisher}
+						<strong>Publisher: </strong> {publisher}
 					</p>
 					<p>
-						<strong>Published Date:</strong> {publishedDate}
+						<strong>Published Date: </strong> {publishedDate}
 					</p>
 					<p>
 						<strong>Description: </strong>
 						{description}
 					</p>
 					<p>
-						<strong>Page Count:</strong>
+						<strong>Page Count: </strong>
 						{pageCount}
 					</p>
 					<p>
-						<strong>Categories:</strong>
+						<strong>Categories: </strong>
 						{categories}
 					</p>
 				</div>
