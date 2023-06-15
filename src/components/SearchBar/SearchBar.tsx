@@ -3,12 +3,9 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { searchBookList } from "../../slices/bookListSlice";
 import { updateSearchInput } from "../../slices/searchSlice";
 import "bootstrap/dist/css/bootstrap.css";
+// import "./SearchBar.css";
 
-interface SearchBarProps {
-	input?: string;
-}
-
-export const SearchBar: React.FC<SearchBarProps> = (props) => {
+export const SearchBar: React.FC<{}> = (props) => {
 	const searchInput = useAppSelector((state) => state.searchInput.searchInput);
 	const dispatch = useAppDispatch();
 
@@ -20,7 +17,7 @@ export const SearchBar: React.FC<SearchBarProps> = (props) => {
 		dispatch(searchBookList(searchInput));
 	};
 	return (
-		<div>
+		<div className="search-bar">
 			<InputGroup className="mb-3">
 				<Form.Control
 					value={searchInput}

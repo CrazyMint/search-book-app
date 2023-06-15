@@ -1,19 +1,19 @@
 import { useAppSelector } from "../../redux/hooks";
-import Book from "../Book/Book";
+import Book, { BookProps } from "../Book/Book";
 import { ThreeDots } from "react-loader-spinner";
 import { SearchBar } from "../SearchBar/SearchBar";
 import "./BookList.css";
+import MyPagination from "../Pagination/MyPagination";
 
 export interface BookInfoProps {
 	title: string;
 	authors: string[];
 	thumbnail: string;
-	bookId?: string | undefined;
+	bookId?: string;
 	selfLink?: string;
 }
 
 export interface BookDetailProps {
-	bookId?: string | undefined;
 	subtitle: string;
 	publisher: string;
 	publishedDate: string;
@@ -24,56 +24,30 @@ export interface BookDetailProps {
 }
 
 export const BookList: React.FC<{}> = (props) => {
-	const bookList: [] = useAppSelector((state) => state.bookList.books);
+	const bookList: BookProps[] = useAppSelector((state) => state.bookList.books);
 	const isPending: boolean = useAppSelector(
 		(state) => state.bookList.isPending
 	);
-	console.log(isPending);
-
 	const bookListItems =
 		bookList === undefined || bookList.length === 0
 			? []
-			: bookList.map((book) => {
-					console.log(book);
-					const {
-						id: bookId,
-						volumeInfo: {
-							title,
-							publishedDate,
-							publisher,
-							authors,
-							description,
-							subtitle,
-							pageCount,
-							categories,
-							imageLinks: { thumbnail } = { thumbnail: "" },
-						},
-						selfLink,
-					} = book;
-
-					const bookInfo: BookInfoProps = {
-						title,
-						authors,
-						thumbnail,
-						bookId,
-						selfLink,
-					};
-					const bookDetailInfo: BookDetailProps = {
-						subtitle,
-						publisher,
-						publishedDate,
-						description,
-						pageCount,
-						categories,
-					};
-
-					return <Book key={bookId} {...bookInfo} {...bookDetailInfo} />;
+			: bookList.map((book: BookProps) => {
+					return <Book key={book.bookId} {...book} />;
 			  });
 
 	return (
-		<div className="booklist">
+		<div className="booklist-container">
 			<SearchBar></SearchBar>
-			{isPending ? <ThreeDots /> : <ul>{bookListItems}</ul>}
+			{isPending ? (
+				<ThreeDots />
+			) : bookListItems.length === 0 ? (
+				"No Result"
+			) : (
+				<div className="booklist">
+					<ul>{bookListItems}</ul>
+					<MyPagination></MyPagination>
+				</div>
+			)}
 		</div>
 	);
 };

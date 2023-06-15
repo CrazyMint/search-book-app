@@ -5,7 +5,8 @@ import { addToWishList, removeFromWishList } from "../../slices/bookListSlice";
 import "./Book.css";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-interface BookProps extends BookInfoProps, BookDetailProps {}
+
+export interface BookProps extends BookInfoProps, BookDetailProps {}
 
 const Book: React.FC<BookProps> = ({
 	title,
@@ -106,4 +107,4 @@ const Book: React.FC<BookProps> = ({
 	);
 };
 
-export default React.memo(Book);
+export default Book;

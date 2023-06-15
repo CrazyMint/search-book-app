@@ -1,12 +1,18 @@
-.booklist {
+.booklist-container {
 	text-align: center;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 	align-items: center;
+	width: 100%;
 }
 
-ul {
+.booklist {
+	display: flex;
+	align-items: center;
+}
+
+.booklist > ul {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
