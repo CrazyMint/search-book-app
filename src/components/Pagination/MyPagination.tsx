@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { searchBookList, updateCurrentPage } from "../../slices/bookListSlice";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import FirstPageIcon from "@mui/icons-material/FirstPage";
+import LastPageIcon from "@mui/icons-material/LastPage";
 
 const MyPagination: React.FC<{}> = () => {
 	const currentPage: number = useAppSelector(
@@ -17,15 +19,23 @@ const MyPagination: React.FC<{}> = () => {
 	);
 	const dispatch = useAppDispatch();
 
-	const handleClickPrev = () => {
+	const handleClickPrev = (first?: boolean) => {
 		if (currentPage === 1) return;
-		dispatch(updateCurrentPage(currentPage - 1));
+		if (first) {
+			dispatch(updateCurrentPage(1));
+		} else {
+			dispatch(updateCurrentPage(currentPage - 1));
+		}
 		dispatch(searchBookList(searchInput));
 	};
 
-	const handleClickNext = () => {
+	const handleClickNext = (last?: boolean) => {
 		if (currentPage === totalPages) return;
-		dispatch(updateCurrentPage(currentPage + 1));
+		if (last) {
+			dispatch(updateCurrentPage(totalPages));
+		} else {
+			dispatch(updateCurrentPage(currentPage + 1));
+		}
 		dispatch(searchBookList(searchInput));
 	};
 
@@ -41,12 +51,19 @@ const MyPagination: React.FC<{}> = () => {
 		.map((item, index) => totalPages - 4 + index);
 	return (
 		<div className="pagination-container">
+			<FirstPageIcon
+				style={{ cursor: "pointer" }}
+				onClick={() => {
+					handleClickPrev(true);
+				}}
+			/>
 			<ArrowBackIosNewIcon
 				style={{ cursor: "pointer" }}
-				onClick={handleClickPrev}
-			>
-				Prev
-			</ArrowBackIosNewIcon>
+				onClick={() => {
+					handleClickPrev();
+				}}
+			/>
+
 			<ul className="pagination-list">
 				{currentPage === 1 ? null : (
 					<li onClick={handleClickNumber} key={1} li-id={1}>
@@ -156,10 +173,16 @@ const MyPagination: React.FC<{}> = () => {
 			</ul>
 			<ArrowForwardIosIcon
 				style={{ cursor: "pointer" }}
-				onClick={handleClickNext}
-			>
-				Next
-			</ArrowForwardIosIcon>
+				onClick={() => {
+					handleClickNext();
+				}}
+			/>
+			<LastPageIcon
+				style={{ cursor: "pointer" }}
+				onClick={() => {
+					handleClickNext(true);
+				}}
+			/>
 		</div>
 	);
 };
