@@ -23,7 +23,10 @@ export const SearchBar: React.FC<{}> = (props) => {
 
 	const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(updateSearchInput(event.target.value));
-		dispatch(generateSuggestions());
+		setTimeout(() => {
+			dispatch(generateSuggestions());
+		}, 400);
+		// dispatch(generateSuggestions());
 	};
 
 	const handleSearch = () => {
@@ -36,7 +39,14 @@ export const SearchBar: React.FC<{}> = (props) => {
 	};
 
 	return (
-		<div className="search-bar">
+		<div
+			className="search-bar"
+			onMouseLeave={() => {
+				setTimeout(() => {
+					dispatch(setShowSuggestion(false));
+				}, 500);
+			}}
+		>
 			<div className="input-group">
 				<Form.Control
 					value={searchInput}
@@ -55,12 +65,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 			</div>
 
 			{showSuggestion ? (
-				<ul
-					className="suggestion-list"
-					onMouseLeave={() => {
-						dispatch(setShowSuggestion(false));
-					}}
-				>
+				<ul className="suggestion-list">
 					{suggestions.map((item, index) => (
 						<li
 							key={index}
