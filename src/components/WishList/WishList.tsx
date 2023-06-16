@@ -46,7 +46,7 @@ export const WishList: React.FC<{}> = (props) => {
 			  });
 
 	return (
-		<div className="booklist">
+		<div className="wishlist">
 			<ul>{wishListItems}</ul>
 		</div>
 	);

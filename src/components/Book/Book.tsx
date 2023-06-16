@@ -54,7 +54,7 @@ const Book: React.FC<BookProps> = ({
 	};
 
 	return (
-		<li book-id={bookId}>
+		<li book-id={bookId} className="book-item">
 			<div className="brief-container">
 				<img
 					src={thumbnail}

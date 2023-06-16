@@ -1,9 +1,11 @@
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Book, { BookProps } from "../Book/Book";
 import { ThreeDots } from "react-loader-spinner";
 import { SearchBar } from "../SearchBar/SearchBar";
 import "./BookList.css";
 import MyPagination from "../Pagination/MyPagination";
+import { useEffect } from "react";
+import { generateSuggestions } from "../../slices/searchSlice";
 
 export interface BookInfoProps {
 	title: string;

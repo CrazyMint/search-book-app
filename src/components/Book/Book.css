@@ -1,4 +1,4 @@
-li {
+.book-item {
 	width: 60%;
 	list-style-type: none;
 	display: flex;

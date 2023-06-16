@@ -2,6 +2,7 @@ import { Slice, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../redux/store";
 import { getBooks } from "../apis/api";
 import { BookProps } from "../components/Book/Book";
+import { setShowSuggestion } from "./searchSlice";
 
 interface BookListState {
 	books: BookProps[];
@@ -21,7 +22,7 @@ const initialState: BookListState = {
 	currentPage: 1,
 };
 
-const parseBookObject = (book: any): BookProps => {
+export const parseBookObject = (book: any): BookProps => {
 	const {
 		id: bookId,
 		volumeInfo: {
@@ -60,6 +61,7 @@ export const searchBookList = createAsyncThunk<
 	const { currentPage, itemsPerPage } = thunkAPI.getState().bookList;
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const maxResults = itemsPerPage;
+	thunkAPI.dispatch(setShowSuggestion(false));
 	return await getBooks(searchInput, startIndex, maxResults);
 });
 
