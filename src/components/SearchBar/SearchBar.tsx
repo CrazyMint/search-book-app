@@ -25,12 +25,12 @@ export const SearchBar: React.FC<{}> = (props) => {
 		(state) => state.searchInput.showSuggestion
 	);
 
-	// const memoizedDedouncedgenerateSuggestions = useCallback(
-	// 	_.debounce(() => {
-	// 		dispatch(generateSuggestions());
-	// 	}, 1000),
-	// 	[]
-	// );
+	const memoizedDedouncedgenerateSuggestions = useCallback(
+		_.debounce(() => {
+			dispatch(generateSuggestions());
+		}, 1000),
+		[]
+	);
 
 	const myMemoizedDedouncedgenerateSuggestions = useDebounce(() => {
 		dispatch(generateSuggestions());
@@ -47,12 +47,14 @@ export const SearchBar: React.FC<{}> = (props) => {
 		dispatch(searchBookList(searchInput));
 	};
 
-	// const memoizedThrottledHandleSearch = useCallback(
-	// 	_.throttle(handleSearch, 3000, { trailing: false }),
-	// 	[]
-	// );
+	const memoizedThrottledHandleSearch = useCallback(
+		_.throttle(handleSearch, 2000, { trailing: false }),
+		[]
+	);
 
-	const myMemoizedThrottledHandleSearch = useThrottle(handleSearch, 3000, {});
+	const myMemoizedThrottledHandleSearch = useThrottle(handleSearch, 2000, {
+		trailing: true,
+	});
 
 	const handleClickSuggestion = (suggestion: string) => {
 		dispatch(searchBookList(suggestion));
@@ -76,6 +78,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 				/>
 				<Button
 					onClick={myMemoizedThrottledHandleSearch}
+					// onClick={memoizedThrottledHandleSearch}
 					variant="outline-secondary"
 					id="button-addon2"
 				>

@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { Options } from "./useThrottle";
 
 const useDebounce = <
 	Arguments extends Array<any>,
@@ -6,9 +7,9 @@ const useDebounce = <
 >(
 	callback: (...args: Arguments) => ReturnType,
 	wait = 0,
-	options = {}
+	options?: Options
 ): ((...args: Arguments) => ReturnType | void) => {
-	// const { leanding, trailing } = options;
+	// const { leanding = false, trailing = true } = options;
 	const waitRef = useRef(false);
 	const callbackRef = useRef(callback);
 	callbackRef.current = callback;
@@ -25,7 +26,7 @@ const useDebounce = <
 				return res;
 			}
 		},
-		[wait]
+		[wait, options]
 	);
 };
 
