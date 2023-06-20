@@ -11,12 +11,12 @@ const useThrottle = <
 >(
 	callback: (...args: Arguments) => ReturnType,
 	wait = 0,
-	options: Options
+	options?: Options
 ): ((...args: Arguments) => ReturnType | void) => {
 	const waitRef = useRef(false);
 	const callbackRef = useRef(callback);
 	callbackRef.current = callback;
-	const { leading = true, trailing = true } = options;
+	const { leading = true, trailing = true } = options || {};
 	return useCallback(
 		(...args: Arguments) => {
 			if (!waitRef.current) {
@@ -33,7 +33,7 @@ const useThrottle = <
 				}
 			}
 		},
-		[wait, options]
+		[leading, trailing, wait]
 	);
 };
 

@@ -9,7 +9,7 @@ const useDebounce = <
 	wait = 0,
 	options?: Options
 ): ((...args: Arguments) => ReturnType | void) => {
-	// const { leanding = false, trailing = true } = options;
+	const { leading = false, trailing = true } = options || {};
 	const waitRef = useRef(false);
 	const callbackRef = useRef(callback);
 	callbackRef.current = callback;
@@ -17,16 +17,19 @@ const useDebounce = <
 		(...args: Arguments) => {
 			if (!waitRef.current) {
 				waitRef.current = true;
-				let res;
 				setTimeout(() => {
 					waitRef.current = false;
-					res = callbackRef.current(...args);
+					if (trailing) {
+						callbackRef.current(...args);
+					}
 				}, wait);
-				console.log(res);
-				return res;
+				if (leading) {
+					console.log(1);
+					callbackRef.current(...args);
+				}
 			}
 		},
-		[wait, options]
+		[leading, trailing, wait]
 	);
 };
 
