@@ -53,11 +53,9 @@ export const searchInputSlice: Slice = createSlice({
 				if (!action.payload || !action.payload.items) return;
 				state.suggestions = action.payload.items.map((bookObj: any) => {
 					const book: BookProps = parseBookObject(bookObj);
-					console.log(book.title);
 					return book.title.length < 50 ? book.title : book.title.slice(0, 50);
 				});
 				state.showSuggestion = true;
-				console.log(state.suggestions);
 			})
 			.addCase(generateSuggestions.rejected, (state, action) => {
 				console.log(action.error.message);

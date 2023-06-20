@@ -1,4 +1,4 @@
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { searchBookList } from "../../slices/bookListSlice";
 import {
@@ -26,7 +26,6 @@ export const SearchBar: React.FC<{}> = (props) => {
 		setTimeout(() => {
 			dispatch(generateSuggestions());
 		}, 400);
-		// dispatch(generateSuggestions());
 	};
 
 	const handleSearch = () => {
@@ -72,6 +71,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 							suggestion-content={item}
 							className="suggestion-item"
 							onClick={() => {
+								console.log("click");
 								handleClickSuggestion(item);
 							}}
 						>
