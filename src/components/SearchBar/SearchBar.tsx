@@ -8,6 +8,10 @@ import {
 } from "../../slices/searchSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import "./SearchBar.css";
+import _ from "lodash";
+import { useCallback } from "react";
+import useThrottle from "../../utils/useThrottle";
+import useDebounce from "../../utils/useDebounce";
 
 export const SearchBar: React.FC<{}> = (props) => {
 	const searchInput: string = useAppSelector(
@@ -21,16 +25,34 @@ export const SearchBar: React.FC<{}> = (props) => {
 		(state) => state.searchInput.showSuggestion
 	);
 
+	// const memoizedDedouncedgenerateSuggestions = useCallback(
+	// 	_.debounce(() => {
+	// 		dispatch(generateSuggestions());
+	// 	}, 1000),
+	// 	[]
+	// );
+
+	const myMemoizedDedouncedgenerateSuggestions = useDebounce(() => {
+		dispatch(generateSuggestions());
+	}, 1000);
+
 	const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+		console.log("input");
 		dispatch(updateSearchInput(event.target.value));
-		setTimeout(() => {
-			dispatch(generateSuggestions());
-		}, 400);
+		myMemoizedDedouncedgenerateSuggestions();
 	};
 
 	const handleSearch = () => {
+		console.log("search");
 		dispatch(searchBookList(searchInput));
 	};
+
+	// const memoizedThrottledHandleSearch = useCallback(
+	// 	_.throttle(handleSearch, 3000, { trailing: false }),
+	// 	[]
+	// );
+
+	const myMemoizedThrottledHandleSearch = useThrottle(handleSearch, 3000, {});
 
 	const handleClickSuggestion = (suggestion: string) => {
 		dispatch(searchBookList(suggestion));
@@ -41,9 +63,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 		<div
 			className="search-bar"
 			onMouseLeave={() => {
-				setTimeout(() => {
-					dispatch(setShowSuggestion(false));
-				}, 500);
+				dispatch(setShowSuggestion(false));
 			}}
 		>
 			<div className="input-group">
@@ -55,7 +75,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 					aria-describedby="basic-addon2"
 				/>
 				<Button
-					onClick={handleSearch}
+					onClick={myMemoizedThrottledHandleSearch}
 					variant="outline-secondary"
 					id="button-addon2"
 				>

@@ -62,6 +62,7 @@ export const searchBookList = createAsyncThunk<
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const maxResults = itemsPerPage;
 	thunkAPI.dispatch(setShowSuggestion(false));
+	if (!searchInput) return;
 	return await getBooks(searchInput, startIndex, maxResults);
 });
 
