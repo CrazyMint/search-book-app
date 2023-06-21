@@ -20,17 +20,14 @@ const useThrottle = <
 	return useCallback(
 		(...args: Arguments) => {
 			if (!waitRef.current) {
-				console.log(leading, trailing);
 				waitRef.current = true;
+				if (leading) {
+					callbackRef.current(...args);
+				}
 				setTimeout(() => {
 					waitRef.current = false;
-					if (trailing) {
-						callbackRef.current(...args);
-					}
+					trailing && callbackRef.current(...args);
 				}, wait);
-				if (leading) {
-					return callbackRef.current(...args);
-				}
 			}
 		},
 		[leading, trailing, wait]

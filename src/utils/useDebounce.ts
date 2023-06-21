@@ -18,19 +18,15 @@ const useDebounce = <
 		(...args: Arguments) => {
 			if (waitRef.current) {
 				clearTimeout(timeout.current);
+			} else {
+				leading && callbackRef.current(...args);
 			}
 
 			waitRef.current = true;
 			timeout.current = setTimeout(() => {
 				waitRef.current = false;
-				if (trailing) {
-					callbackRef.current(...args);
-				}
+				trailing && callbackRef.current(...args);
 			}, wait);
-			if (leading) {
-				console.log(1);
-				callbackRef.current(...args);
-			}
 		},
 		[leading, trailing, wait]
 	);
