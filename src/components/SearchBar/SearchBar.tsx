@@ -26,6 +26,24 @@ export const SearchBar: React.FC<{}> = (props) => {
 	);
 	const [selectIndex, setSelectIndex] = useState(-1);
 
+	const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+		dispatch(updateSearchInput(event.target.value));
+		myMemoizedDedouncedgenerateSuggestions();
+		// memoizedDedouncedgenerateSuggestions();
+	};
+
+	const handleSearch = () => {
+		console.log("search");
+		dispatch(searchBookList(searchInput));
+		dispatch(setShowSuggestion(false));
+	};
+
+	const handleClickSuggestion = (suggestion: string) => {
+		dispatch(searchBookList(suggestion));
+		dispatch(updateSearchInput(suggestion));
+		dispatch(setShowSuggestion(false));
+	};
+
 	const memoizedDedouncedgenerateSuggestions = useCallback(
 		_.debounce(
 			() => {
@@ -47,18 +65,6 @@ export const SearchBar: React.FC<{}> = (props) => {
 		{ leading: false, trailing: true }
 	);
 
-	const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-		dispatch(updateSearchInput(event.target.value));
-		myMemoizedDedouncedgenerateSuggestions();
-		// memoizedDedouncedgenerateSuggestions();
-	};
-
-	const handleSearch = () => {
-		console.log("search");
-		dispatch(searchBookList(searchInput));
-		dispatch(setShowSuggestion(false));
-	};
-
 	const memoizedThrottledHandleSearch = useCallback(
 		_.throttle(handleSearch, 2000, { trailing: false }),
 		[]
@@ -68,20 +74,14 @@ export const SearchBar: React.FC<{}> = (props) => {
 		trailing: false,
 	});
 
-	const handleClickSuggestion = (suggestion: string) => {
-		dispatch(searchBookList(suggestion));
-		dispatch(updateSearchInput(suggestion));
-		dispatch(setShowSuggestion(false));
-	};
-
 	return (
 		<div className="search-bar">
 			<div className="input-group">
-				<TextField
-					id="outlined-basic"
-					label="Title"
-					variant="outlined"
-					size="small"
+				<input
+					className="input-text"
+					// label="Title"
+					// variant="outlined"
+					// size="small"
 					value={searchInput}
 					placeholder="Title"
 					onChange={handleInput}

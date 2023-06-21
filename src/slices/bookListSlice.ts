@@ -115,6 +115,7 @@ export const bookListSlice: Slice = createSlice({
 					20,
 					Math.ceil(action.payload.totalItems / state.itemsPerPage)
 				);
+				// setShowSuggestion(false);
 			})
 			.addCase(searchBookList.rejected, (state, action) => {
 				state.isPending = false;
