@@ -3,8 +3,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { BookDetailProps, BookInfoProps } from "../BookList/BookList";
 import { addToWishList, removeFromWishList } from "../../slices/bookListSlice";
 import "./Book.css";
-import { Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.css";
+import { Button } from "@mui/material";
 
 export interface BookProps extends BookInfoProps, BookDetailProps {}
 
@@ -68,11 +67,21 @@ const Book: React.FC<BookProps> = ({
 						<strong>By: {displayAuthors}</strong>
 					</p>
 					{wished ? (
-						<Button onClick={handleClickRemove} variant="success">
+						<Button
+							onClick={handleClickRemove}
+							variant="contained"
+							size="small"
+							style={{ maxWidth: "200px" }}
+						>
 							Remove from wish list
 						</Button>
 					) : (
-						<Button onClick={handleClickAdd} variant="success">
+						<Button
+							onClick={handleClickAdd}
+							variant="contained"
+							size="small"
+							style={{ maxWidth: "200px" }}
+						>
 							Add to wish list
 						</Button>
 					)}

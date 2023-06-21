@@ -1,4 +1,3 @@
-import { Button, Form } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { searchBookList } from "../../slices/bookListSlice";
 import {
@@ -6,23 +5,24 @@ import {
 	setShowSuggestion,
 	updateSearchInput,
 } from "../../slices/searchSlice";
-import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap/dist/css/bootstrap.css";
 import "./SearchBar.css";
 import _ from "lodash";
 import { useCallback, useState } from "react";
 import useThrottle from "../../utils/useThrottle";
 import useDebounce from "../../utils/useDebounce";
+import { Button, TextField } from "@mui/material";
 
 export const SearchBar: React.FC<{}> = (props) => {
 	const searchInput: string = useAppSelector(
-		(state) => state.searchInput.searchInput
+		(state) => state.searchInputSlice.searchInput
 	);
 	const dispatch = useAppDispatch();
 	const suggestions: string[] = useAppSelector(
-		(state) => state.searchInput.suggestions
+		(state) => state.searchInputSlice.suggestions
 	);
 	const showSuggestion: boolean = useAppSelector(
-		(state) => state.searchInput.showSuggestion
+		(state) => state.searchInputSlice.showSuggestion
 	);
 	const [selectIndex, setSelectIndex] = useState(-1);
 
@@ -32,7 +32,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 				dispatch(generateSuggestions());
 				setSelectIndex(-1);
 			},
-			1000,
+			500,
 			{ leading: false, trailing: true }
 		),
 		[]
@@ -43,7 +43,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 			dispatch(generateSuggestions());
 			setSelectIndex(-1);
 		},
-		1000,
+		500,
 		{ leading: false, trailing: true }
 	);
 
@@ -77,11 +77,13 @@ export const SearchBar: React.FC<{}> = (props) => {
 	return (
 		<div className="search-bar">
 			<div className="input-group">
-				<Form.Control
+				<TextField
+					id="outlined-basic"
+					label="Title"
+					variant="outlined"
+					size="small"
 					value={searchInput}
 					placeholder="Title"
-					aria-label="Title"
-					aria-describedby="basic-addon2"
 					onChange={handleInput}
 					onBlur={() => {
 						dispatch(setShowSuggestion(false));
@@ -106,8 +108,9 @@ export const SearchBar: React.FC<{}> = (props) => {
 				<Button
 					onClick={myMemoizedThrottledHandleSearch}
 					// onClick={memoizedThrottledHandleSearch}
-					variant="outline-secondary"
+					variant="outlined"
 					id="button-addon2"
+					size="small"
 				>
 					Search
 				</Button>

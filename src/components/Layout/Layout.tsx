@@ -17,8 +17,8 @@ const linkStyle = {
 
 export const Layout: React.FC<Props> = ({ children }) => {
 	return (
-		<div className="nav-wrapper">
-			<div className="navbar">
+		<div className="nav-wrapper" data-testid="nav-wrapper">
+			<div className="navbar" data-testid="navbar">
 				<Link to="/" style={linkStyle}>
 					Book List
 				</Link>

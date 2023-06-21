@@ -58,7 +58,7 @@ export const searchBookList = createAsyncThunk<
 	string,
 	{ state: RootState; dispatch: AppDispatch }
 >("bookListSlice/searchBookList", async (searchInput: string, thunkAPI) => {
-	const { currentPage, itemsPerPage } = thunkAPI.getState().bookList;
+	const { currentPage, itemsPerPage } = thunkAPI.getState().bookListSlice;
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const maxResults = itemsPerPage;
 	if (!searchInput) return;
@@ -127,6 +127,6 @@ export const bookListSlice: Slice = createSlice({
 export const { addToWishList, removeFromWishList, updateCurrentPage } =
 	bookListSlice.actions;
 
-export const selectBookList = (state: RootState) => state.bookList.books;
+export const selectBookList = (state: RootState) => state.bookListSlice.books;
 
 export default bookListSlice.reducer;

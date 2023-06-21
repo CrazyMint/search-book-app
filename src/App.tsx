@@ -5,20 +5,18 @@ import { store } from "./redux/store";
 import { BookList } from "./components/BookList/BookList";
 import { WishList } from "./components/WishList/WishList";
 import { Layout } from "./components/Layout/Layout";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
 	return (
-		<BrowserRouter>
-			<Provider store={store}>
-				<Layout>
-					<Routes>
-						<Route path="/" element={<BookList />} />
-						<Route path="/wishlist" element={<WishList />} />
-					</Routes>
-				</Layout>
-			</Provider>
-		</BrowserRouter>
+		<Provider store={store}>
+			<Layout>
+				<Routes>
+					<Route path="/" element={<BookList />} />
+					<Route path="/wishlist" element={<WishList />} />
+				</Routes>
+			</Layout>
+		</Provider>
 	);
 }
 

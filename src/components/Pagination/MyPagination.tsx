@@ -9,13 +9,13 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 
 const MyPagination: React.FC<{}> = () => {
 	const currentPage: number = useAppSelector(
-		(state) => state.bookList.currentPage
+		(state) => state.bookListSlice.currentPage
 	);
 	const searchInput: string = useAppSelector(
-		(state) => state.searchInput.searchInput
+		(state) => state.searchInputSlice.searchInput
 	);
 	const totalPages: number = useAppSelector(
-		(state) => state.bookList.totalPages
+		(state) => state.bookListSlice.totalPages
 	);
 	const dispatch = useAppDispatch();
 

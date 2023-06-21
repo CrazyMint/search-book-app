@@ -26,9 +26,11 @@ export interface BookDetailProps {
 }
 
 export const BookList: React.FC<{}> = (props) => {
-	const bookList: BookProps[] = useAppSelector((state) => state.bookList.books);
+	const bookList: BookProps[] = useAppSelector(
+		(state) => state.bookListSlice.books
+	);
 	const isPending: boolean = useAppSelector(
-		(state) => state.bookList.isPending
+		(state) => state.bookListSlice.isPending
 	);
 	const bookListItems =
 		bookList === undefined || bookList.length === 0

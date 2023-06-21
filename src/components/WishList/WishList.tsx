@@ -5,26 +5,22 @@ import "./WishList.css";
 
 export const WishList: React.FC<{}> = (props) => {
 	const wishList: BookProps[] = useAppSelector(
-		(state) => state.bookList.wishedbooks
+		(state) => state.bookListSlice.wishedbooks
 	);
 
 	const wishListItems =
 		wishList === undefined || wishList.length === 0
 			? []
 			: wishList.map((book: BookProps) => {
-					// const volumeInfo = book.volumeInfo;
 					const bookId = book.bookId;
 					const title = book.title;
 					const authors = book.authors;
-					// const imageLinks: Object | undefined = book.thumbnail;
 					const thumbnail = book.thumbnail;
-					// const selfLink: any
 					const bookInfo: BookInfoProps = {
 						title,
 						authors,
 						thumbnail,
 						bookId,
-						// selfLink,
 					};
 
 					const subtitle = book.subtitle;
@@ -46,7 +42,7 @@ export const WishList: React.FC<{}> = (props) => {
 			  });
 
 	return (
-		<div className="wishlist">
+		<div className="wishlist" data-testid="wishlist">
 			<ul>{wishListItems}</ul>
 		</div>
 	);
