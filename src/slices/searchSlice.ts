@@ -27,7 +27,8 @@ export const generateSuggestions = createAsyncThunk<
 	{ state: RootState; dispatch: AppDispatch }
 >("searchSlice/generateSuggestions", async (arg, thunkAPI) => {
 	const searchInput = thunkAPI.getState().searchInputSlice.searchInput;
-	if (!searchInput) return;
+	console.log("searchslice", searchInput);
+	if (!searchInput) return [];
 	const books = await getBooks(searchInput, 0, 10);
 	return books;
 });
@@ -40,6 +41,7 @@ export const searchInputSlice: Slice = createSlice({
 			state.searchInput = action.payload;
 			if (!state.searchInput) {
 				state.showSuggestion = false;
+				state.suggestions = [];
 			}
 		},
 		setShowSuggestion: (state, action) => {

@@ -11,7 +11,7 @@ import _ from "lodash";
 import { useCallback, useState } from "react";
 import useThrottle from "../../utils/useThrottle";
 import useDebounce from "../../utils/useDebounce";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 
 export const SearchBar: React.FC<{}> = (props) => {
 	const searchInput: string = useAppSelector(
@@ -33,7 +33,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 	};
 
 	const handleSearch = () => {
-		console.log("search");
+		console.log("search", searchInput);
 		dispatch(searchBookList(searchInput));
 		dispatch(setShowSuggestion(false));
 	};
@@ -66,8 +66,8 @@ export const SearchBar: React.FC<{}> = (props) => {
 	);
 
 	const memoizedThrottledHandleSearch = useCallback(
-		_.throttle(handleSearch, 2000, { trailing: false }),
-		[]
+		_.throttle(handleSearch, 2000),
+		[searchInput]
 	);
 
 	const myMemoizedThrottledHandleSearch = useThrottle(handleSearch, 2000, {
@@ -79,9 +79,6 @@ export const SearchBar: React.FC<{}> = (props) => {
 			<div className="input-group">
 				<input
 					className="input-text"
-					// label="Title"
-					// variant="outlined"
-					// size="small"
 					value={searchInput}
 					placeholder="Title"
 					onChange={handleInput}
@@ -106,8 +103,8 @@ export const SearchBar: React.FC<{}> = (props) => {
 					}}
 				/>
 				<Button
-					onClick={myMemoizedThrottledHandleSearch}
-					// onClick={memoizedThrottledHandleSearch}
+					// onClick={myMemoizedThrottledHandleSearch}
+					onClick={memoizedThrottledHandleSearch}
 					variant="outlined"
 					id="button-addon2"
 					size="small"
@@ -116,7 +113,7 @@ export const SearchBar: React.FC<{}> = (props) => {
 				</Button>
 			</div>
 
-			{showSuggestion ? (
+			{showSuggestion && suggestions.length > 0 ? (
 				<ul className="suggestion-list">
 					{suggestions.map((item: string, index) => (
 						<li
