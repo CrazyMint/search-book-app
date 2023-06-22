@@ -3,7 +3,6 @@ import { useAppDispatch } from "../../redux/hooks";
 import { BookDetailProps, BookInfoProps } from "../BookList/BookList";
 import { addToWishList, removeFromWishList } from "../../slices/bookListSlice";
 import "./Book.css";
-import { Button } from "@mui/material";
 
 export interface BookProps extends BookInfoProps, BookDetailProps {}
 
@@ -28,28 +27,13 @@ const Book: React.FC<BookProps> = ({
 		authors?.length === 1 ? authors[0] : authors?.join(", ");
 
 	const handleClickAdd = () => {
-		try {
-			dispatch(addToWishList(bookId));
-		} catch (error) {
-			console.log(error);
-			alert(error);
-		}
+		dispatch(addToWishList(bookId));
 	};
 	const handleClickRemove = () => {
-		try {
-			dispatch(removeFromWishList(bookId));
-		} catch (error) {
-			console.log(error);
-			alert(error);
-		}
+		dispatch(removeFromWishList(bookId));
 	};
 	const handleClickBook = () => {
-		try {
-			setShowDetails(!showDetails);
-		} catch (error) {
-			console.log(error);
-			alert(error);
-		}
+		setShowDetails(!showDetails);
 	};
 
 	return (
@@ -67,23 +51,13 @@ const Book: React.FC<BookProps> = ({
 						<strong>By: {displayAuthors}</strong>
 					</p>
 					{wished ? (
-						<Button
-							onClick={handleClickRemove}
-							variant="contained"
-							size="small"
-							style={{ maxWidth: "200px" }}
-						>
+						<button onClick={handleClickRemove} className="button-3">
 							Remove from wish list
-						</Button>
+						</button>
 					) : (
-						<Button
-							onClick={handleClickAdd}
-							variant="contained"
-							size="small"
-							style={{ maxWidth: "200px" }}
-						>
+						<button onClick={handleClickAdd} className="button-3">
 							Add to wish list
-						</Button>
+						</button>
 					)}
 				</div>
 			</div>

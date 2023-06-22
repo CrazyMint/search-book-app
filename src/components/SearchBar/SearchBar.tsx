@@ -11,7 +11,6 @@ import _ from "lodash";
 import { useCallback, useState } from "react";
 import useThrottle from "../../utils/useThrottle";
 import useDebounce from "../../utils/useDebounce";
-import { Button } from "@mui/material";
 
 export const SearchBar: React.FC<{}> = (props) => {
 	const searchInput: string = useAppSelector(
@@ -102,15 +101,13 @@ export const SearchBar: React.FC<{}> = (props) => {
 						}
 					}}
 				/>
-				<Button
+				<button
 					// onClick={myMemoizedThrottledHandleSearch}
 					onClick={memoizedThrottledHandleSearch}
-					variant="outlined"
-					id="button-addon2"
-					size="small"
+					className="button-2"
 				>
 					Search
-				</Button>
+				</button>
 			</div>
 
 			{showSuggestion && suggestions.length > 0 ? (

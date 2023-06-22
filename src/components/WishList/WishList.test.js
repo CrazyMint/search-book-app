@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { WishList } from "./WishList";
 import { configureStore } from "@reduxjs/toolkit";
 import bookListSlice from "../../slices/bookListSlice";
@@ -73,10 +73,26 @@ describe("wishlist component", () => {
 		const wishList = screen.queryByRole("list");
 		expect(wishList).toBeInTheDocument();
 
-		await waitFor(() => {
-			const listItems = screen.queryAllByRole("listitem");
-			expect(listItems).toHaveLength(2);
-		});
+		const listItems = await screen.findAllByRole("listitem");
+		expect(listItems).toHaveLength(2);
+	});
+	test("should remove a book from wishlist when clicking remove button", async () => {
+		render(
+			<Provider store={createMockStore()}>
+				<WishList />
+			</Provider>
+		);
+		let removeBtns = screen.queryAllByRole("button");
+		expect(removeBtns).toHaveLength(2);
+
+		await userEvent.click(removeBtns[0]);
+		const listItems = screen.queryAllByRole("listitem");
+		expect(listItems).toHaveLength(1);
+
+		removeBtns = screen.queryAllByRole("button");
+		expect(removeBtns).toHaveLength(1);
+		await userEvent.click(removeBtns[0]);
+		expect(screen.queryAllByRole("listitem")).toHaveLength(0);
 	});
 });
 
@@ -84,11 +100,9 @@ describe("react router", () => {
 	test("full app rendering/navigating", async () => {
 		render(<App />, { wrapper: BrowserRouter });
 
-		// verify page content for default route
 		expect(screen.getByTestId("nav-wrapper")).toBeInTheDocument();
 		expect(screen.getByTestId("navbar")).toBeInTheDocument();
 
-		// verify page content for expected route after navigating
 		expect(screen.getByText(/Search/i)).toBeInTheDocument();
 
 		userEvent.click(screen.getByText(/Search/i));
